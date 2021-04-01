@@ -369,7 +369,7 @@ def add_testimonial(request, username):
                         return JsonResponse({'status': 1, 'message': "added"})
                 else:
                     return JsonResponse({'status': 0, 'error': "Testimonial size is " + str(
-                        len(content)) + " characters, while maximum size allowed is 500 characters."})
+                        len(content)) + " characters, while maximum size allowed is 300 characters."})
             else:
                 return JsonResponse({'status': 0, 'error': "User doesn't exist"})
         else:
@@ -465,7 +465,7 @@ def change_answer(request, username):
                         return JsonResponse({'status': 0, 'error': "Question doesn't exist"})
                 else:
                     return JsonResponse({'status': 0, 'error': "Answer size is " + str(
-                        len(new_answer)) + " characters, while maximum size allowed is 500 characters."})
+                        len(new_answer)) + " characters, while maximum size allowed is 300 characters."})
             else:
                 return JsonResponse({'status': 0, 'error': "You are not authorised to change this"})
         else:
