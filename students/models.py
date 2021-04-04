@@ -116,7 +116,7 @@ class ProfileQuestion (models.Model):
 class ProfileAnswers (models.Model):
     profile = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)
     question = models.ForeignKey(ProfileQuestion, null=True, on_delete=models.SET_NULL)
-    answer = models.TextField(max_length = 400)
+    answer = models.TextField(max_length = 300)
 
     def __str__(self):
         if self.question:

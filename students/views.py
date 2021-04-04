@@ -450,7 +450,7 @@ def change_answer(request, username):
                 new_answer = request.POST.get("answer", -1)
                 if new_answer == -1:
                     return JsonResponse({'status': 0, 'error': "Answer size out of bounds"})
-                if len(new_answer) <= 400:
+                if len(new_answer) <= 300:
                     question = ProfileQuestion.objects.filter(id=int(question_id)).first()
                     if question:
                         answer = ProfileAnswers.objects.filter(question=question, profile=profile).first()
@@ -465,7 +465,7 @@ def change_answer(request, username):
                         return JsonResponse({'status': 0, 'error': "Question doesn't exist"})
                 else:
                     return JsonResponse({'status': 0, 'error': "Answer size is " + str(
-                        len(new_answer)) + " characters, while maximum size allowed is 400 characters."})
+                        len(new_answer)) + " characters, while maximum size allowed is 300 characters."})
             else:
                 return JsonResponse({'status': 0, 'error': "You are not authorised to change this"})
         else:
