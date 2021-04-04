@@ -356,7 +356,7 @@ def add_testimonial(request, username):
                     return JsonResponse(
                         {'status': 0, 'error': "You can't write a testimonial for non-graduating batch"})
                 content = request.POST.get("content", "")
-                if len(content) <= 300 and content != "":
+                if len(content) <= 400 and content != "":
                     old_testimonial = Testimonial.objects.filter(given_to=given_to_profile,
                                                                  given_by=given_by_profile).first()
                     if old_testimonial:
@@ -369,7 +369,7 @@ def add_testimonial(request, username):
                         return JsonResponse({'status': 1, 'message': "added"})
                 else:
                     return JsonResponse({'status': 0, 'error': "Testimonial size is " + str(
-                        len(content)) + " characters, while maximum size allowed is 300 characters."})
+                        len(content)) + " characters, while maximum size allowed is 400 characters."})
             else:
                 return JsonResponse({'status': 0, 'error': "User doesn't exist"})
         else:
@@ -450,7 +450,7 @@ def change_answer(request, username):
                 new_answer = request.POST.get("answer", -1)
                 if new_answer == -1:
                     return JsonResponse({'status': 0, 'error': "Answer size out of bounds"})
-                if len(new_answer) <= 300:
+                if len(new_answer) <= 400:
                     question = ProfileQuestion.objects.filter(id=int(question_id)).first()
                     if question:
                         answer = ProfileAnswers.objects.filter(question=question, profile=profile).first()
@@ -465,7 +465,7 @@ def change_answer(request, username):
                         return JsonResponse({'status': 0, 'error': "Question doesn't exist"})
                 else:
                     return JsonResponse({'status': 0, 'error': "Answer size is " + str(
-                        len(new_answer)) + " characters, while maximum size allowed is 300 characters."})
+                        len(new_answer)) + " characters, while maximum size allowed is 400 characters."})
             else:
                 return JsonResponse({'status': 0, 'error': "You are not authorised to change this"})
         else:

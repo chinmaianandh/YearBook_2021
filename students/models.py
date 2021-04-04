@@ -80,7 +80,7 @@ class Profile(models.Model):
 class Testimonial(models.Model):
     favourite = models.BooleanField(default=False)
     given_by = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE, related_name='given_by')
-    content = models.TextField(max_length = 300)
+    content = models.TextField(max_length = 400)
     given_to = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE, related_name='given_to')
 
     def __str__(self):
@@ -116,7 +116,7 @@ class ProfileQuestion (models.Model):
 class ProfileAnswers (models.Model):
     profile = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)
     question = models.ForeignKey(ProfileQuestion, null=True, on_delete=models.SET_NULL)
-    answer = models.TextField(max_length = 300)
+    answer = models.TextField(max_length = 400)
 
     def __str__(self):
         if self.question:
