@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 # Create your models here.
 
 
@@ -123,3 +124,11 @@ class ProfileAnswers (models.Model):
             return self.question.question+" "+self.profile.full_name
         else:
             return "Deleted Profile Question "+self.profile.full_name
+
+
+class Announcement(models.Model):
+    content = models.TextField(max_length=150)
+    pub_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.content
