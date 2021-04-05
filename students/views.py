@@ -9,6 +9,8 @@ from PIL import Image, ImageOps
 import os
 import re
 from yearbook.settings import BASE_DIR, MEDIA_ROOT, POLL_STOP, PORTAL_STOP, PRODUCTION
+import collections
+import operator
 
 # Create your views here.
 
@@ -628,3 +630,22 @@ def team(request):
             return render(request, 'team.html', context)
     else:
         return error404(request)
+
+@login_required
+def leaderboard(request):
+    if request.method=='GET':
+        if request.user and not request.user.is_anonymous:
+            logged_in = True
+        else:
+            logged_in = False
+        if logged_in:
+            givenToList = [ testi.given_to for testi in Testimonial.objects.all() ]
+            Dict = collections.Counter(givenToList)
+            sorted_d = dict( sorted(Dict.items(), key=operator.itemgetter(1),reverse=True))
+            context = {'dict':sorted_d }
+            return render(request, 'leaderboard.html',context)                      
+        else:
+            return HttpResponseRedirect(reverse('login'))
+    else:
+        return error404(request)
+        

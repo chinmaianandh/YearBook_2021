@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Home | SAIL Year Book Portal {% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <table>
+            {% for i,j in dict.items %}
+                <tr>
+                    <td>
+                        <img src ="{{ i.profile_pic.url }}">
+                    </td>
+                    <td>
+                        {{ i.full_name }} 
+                    </td>
+                    <td>
+                        {{ j }} 
+                    </td>
+                </tr>
+            {% endfor %}
+             
+        </table>
+    </div>
+{% endblock %}
+
