@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpResponseBadRequest
 from django.urls import reverse
 from django.contrib.auth.models import User
-from .models import Testimonial, PollAnswer, PollQuestion, ProfileAnswers, ProfileQuestion, Profile
+from .models import Testimonial, PollAnswer, PollQuestion, ProfileAnswers, ProfileQuestion, Profile, Announcement
 from django.db.models.functions import Length, Lower
 from PIL import Image, ImageOps
 import os
@@ -643,10 +643,14 @@ def leaderboard(request):
             given_to_list = [testi.given_to for testi in Testimonial.objects.all()]
             given_to_counter = collections.Counter(given_to_list)
             sorted_d = dict(sorted(given_to_counter.items(), key=lambda x: x[1], reverse=True))
+
+            announce=list(Announcement.objects.all().order_by('-pub_date'))
+
             context = {
                 'user': user,
                 'logged_in': logged_in,
-                'dict': sorted_d
+                'lead_dict': sorted_d,
+                'announce_list': announce
             }
             return render(request, 'leaderboard.html', context)
         else:

@@ -129,6 +129,7 @@ class ProfileAnswers (models.Model):
 class Announcement(models.Model):
     content = models.TextField(max_length=150)
     pub_date = models.DateTimeField(default=timezone.now)
+    important = models.BooleanField(default=False)
 
     def __str__(self):
         return self.content
