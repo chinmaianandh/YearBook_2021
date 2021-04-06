@@ -4,22 +4,41 @@
 
 {% block content %}
     <div class="container-fluid">
-        <table>
-            {% for i,j in lead_dict.items %}
-                <tr>
-                    <td>
-                        <img src ="{{ i.profile_pic.url }}">
-                    </td>
-                    <td>
-                        {{ i.full_name }} 
-                    </td>
-                    <td>
-                        {{ j }} 
-                    </td>
-                </tr>
-            {% endfor %}
-             
-        </table>
+        <div class="row mb-2">
+            <div class="col-xl-6 col-lg-8">
+                <table>
+                    {% for i in announce_list %}
+                        <tr>
+                            <td>
+                                {{ i.content }}
+                                {% if i.important %}
+                                    "important"
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                </table>
+            </div>
+            <div class="col-xl-6 col-lg-8">
+                <table>
+                    {% for i,j in lead_dict.items %}
+                        <tr>
+                            <td>
+                                <a href="{{ i.profile_pic.url }}"><img src ="{{ i.profile_pic.url }}" height="100px"></a>
+                            </td>
+                            <td>
+                                <a href="{% url 'profile' i.user.username %}">{{ i.full_name }}</a>
+                            </td>
+                            <td>
+                                {{ j }} 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
