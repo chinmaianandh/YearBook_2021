@@ -22,7 +22,7 @@ from social_django import urls as social_django_urls
 from students import views as student_views
 
 urlpatterns = [
-                  path('', student_views.home, name='home'),
+                  path('', student_views.leaderboard, name='leaderboard'),
                   # path('login/', LoginView.as_view(template_name='login.html'), name='login'),
                   path('login/', student_views.login, name='login'),
                   path('logout/', LogoutView.as_view(), name='logout'),
@@ -30,7 +30,7 @@ urlpatterns = [
                   path('oauth/', include(social_django_urls, namespace='social')),
                   path('search/', student_views.search, name='search'),
                   path('polls/', student_views.polls, name='polls'),
-                  path('leaderboard/', student_views.leaderboard, name='leaderboard'),
+                  path('mytesti/', student_views.home, name='home'),
                   path('add_vote/', student_views.add_vote, name='add_vote'),
                   path('delete_testimonial/', student_views.delete_testimonial, name='delete_testimonial'),
                   path('favourite_testimonial/', student_views.favourite_testimonial, name='favourite_testimonial'),
