@@ -3,43 +3,65 @@
 {% block title %} Home | SAIL Year Book Portal {% endblock %}
 
 {% block content %}
-
+{% load static %}
 <div class="container-fluid">
 	<div class="row mb-2">
-		<div class="col-xl-6 col-lg-8">
-
-			<table>
-				{% for i in announce_list %}
-				<tr>
-					<td>
-						{{ i.content }}
-						{% if i.important %}
-						"important"
+		<div class="col-xl-6 col-lg-12">
+			<div style="width :fit-content;min-width: 50%;height: fit-content;margin: auto;">
+				<table class="table table-bordered">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col">Announcements</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% if not announce_list %}
+						<tr><td>No Announcements</td></tr>
 						{% endif %}
-					</td>
-				</tr>
-				{% endfor %}
-
+						{% for i in announce_list %}
+						<tr>
+							<td>
+								{{ i.content }}
+								{% if i.important %}
+								<img src="{% static 'img/announce.gif' %}" height="30px">
+								{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-xl-6 col-lg-12" style="text-align: center;">
+			<div style="height: fit-content;margin: auto;">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="bg-light" scope="col" colspan="2">Testimonials Leaderboard</th>
+					</tr>
+					<tr>
+						<th scope="col" style="vertical-align:middle;">User</th>
+						<th scope="col">Testimonial<br>Count</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for i,j in lead_dict.items %}
+					<tr>
+						<td>
+							<span style="float: left;">
+							<a href="{{ i.profile_pic.url }}" style="margin-right: 50px;"><img src="{{ i.profile_pic.url }}" height="50px" style="border-radius: 50%;"></a>
+								
+							<a href="{% url 'profile' i.user.username %}" >{{ i.full_name }}</a>
+							</span>
+						</td>
+						<td style="vertical-align:middle;">
+							{{ j }}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
 			</table>
 		</div>
-		<div class="col-xl-6 col-lg-8">
-
-			<table>
-				{% for i,j in lead_dict.items %}
-				<tr>
-					<td>
-						<a href="{{ i.profile_pic.url }}"><img src="{{ i.profile_pic.url }}" height="100px"></a>
-					</td>
-					<td>
-						<a href="{% url 'profile' i.user.username %}">{{ i.full_name }}</a>
-					</td>
-					<td>
-						{{ j }}
-					</td>
-				</tr>
-				{% endfor %}
-
-			</table>
 		</div>
 	</div>
 </div>
