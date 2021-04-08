@@ -31,7 +31,6 @@ urlpatterns = [
                   path('search/', student_views.search, name='search'),
                   path('polls/', student_views.polls, name='polls'),
                   path('announcements/', student_views.leaderboard, name='leaderboard'),
-                  path('update_leaderboard/', student_views.update_leaderboard, name='update_leaderboard'),
                   path('add_vote/', student_views.add_vote, name='add_vote'),
                   path('delete_testimonial/', student_views.delete_testimonial, name='delete_testimonial'),
                   path('favourite_testimonial/', student_views.favourite_testimonial, name='favourite_testimonial'),
