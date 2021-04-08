@@ -135,6 +135,9 @@ class Announcement(models.Model):
     def __str__(self):
         return self.content
 
+def get_cnt_default():
+    return list([10,10,10,10,10,10,10,10,10,10])
+
 class Leaderboard(models.Model):
     pub_date = models.DateTimeField(default=timezone.now)
     profile_0 = models.ForeignKey(Profile,null=True,related_name='profile_0',on_delete=models.SET_NULL)
@@ -147,4 +150,13 @@ class Leaderboard(models.Model):
     profile_7 = models.ForeignKey(Profile,null=True,related_name='profile_7',on_delete=models.SET_NULL)
     profile_8 = models.ForeignKey(Profile,null=True,related_name='profile_8',on_delete=models.SET_NULL)
     profile_9 = models.ForeignKey(Profile,null=True,related_name='profile_9',on_delete=models.SET_NULL)
-    cnt_list = ArrayField(models.IntegerField(default=0),size=10)
+    cnt_0 = models.IntegerField(default=0)
+    cnt_1 = models.IntegerField(default=0)
+    cnt_2 = models.IntegerField(default=0)
+    cnt_3 = models.IntegerField(default=0)
+    cnt_4 = models.IntegerField(default=0)
+    cnt_5 = models.IntegerField(default=0)
+    cnt_6 = models.IntegerField(default=0)
+    cnt_7 = models.IntegerField(default=0)
+    cnt_8 = models.IntegerField(default=0)
+    cnt_9 = models.IntegerField(default=0)

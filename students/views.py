@@ -3,13 +3,14 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpResponseBadRequest
 from django.urls import reverse
 from django.contrib.auth.models import User
-from .models import Testimonial, PollAnswer, PollQuestion, ProfileAnswers, ProfileQuestion, Profile, Announcement
+from .models import Testimonial, PollAnswer, PollQuestion, ProfileAnswers, ProfileQuestion, Profile, Announcement, Leaderboard
 from django.db.models.functions import Length, Lower
 from PIL import Image, ImageOps
 import os
 import re
 from yearbook.settings import BASE_DIR, MEDIA_ROOT, POLL_STOP, PORTAL_STOP, PRODUCTION
 import collections
+from datetime import timedelta
 
 # Create your views here.
 
@@ -640,18 +641,28 @@ def leaderboard(request):
             logged_in = False
         if logged_in:
             user = User.objects.filter(username=request.user.username).first()
-            given_to_list = [testi.given_to for testi in Testimonial.objects.all()]
-            given_to_counter = collections.Counter(given_to_list)
-            sorted_d = sorted(given_to_counter.items(), key=lambda x: x[1], reverse=True)
-            if len(sorted_d)>10:
-                sorted_d=sorted_d[0:10]
+
+            lead = (Leaderboard.objects.all().order_by('-pub_date'))[0]
+            sorted_d = []
+            sorted_d.append((lead.profile_0,lead.cnt_0))
+            sorted_d.append((lead.profile_1,lead.cnt_1))
+            sorted_d.append((lead.profile_2,lead.cnt_2))
+            sorted_d.append((lead.profile_3,lead.cnt_3))
+            sorted_d.append((lead.profile_4,lead.cnt_4))
+            sorted_d.append((lead.profile_5,lead.cnt_5))
+            sorted_d.append((lead.profile_6,lead.cnt_6))
+            sorted_d.append((lead.profile_7,lead.cnt_7))
+            sorted_d.append((lead.profile_8,lead.cnt_8))
+            sorted_d.append((lead.profile_9,lead.cnt_9))
+            last_updated = (lead.pub_date + timedelta(hours=5,minutes=30)).strftime("%H:%M, %b %d")
             announce=list(Announcement.objects.all().order_by('-pub_date'))
 
             context = {
                 'user': user,
                 'logged_in': logged_in,
                 'lead_dict': sorted_d,
-                'announce_list': announce
+                'announce_list': announce,
+                'last_updated': last_updated
             }
             return render(request, 'leaderboard.html', context)
         else:
@@ -669,20 +680,38 @@ def update_leaderboard(request):
             logged_in = False
         if logged_in:
             user = User.objects.filter(username=request.user.username).first()
-            given_to_list = [testi.given_to for testi in Testimonial.objects.all()]
-            given_to_counter = collections.Counter(given_to_list)
-            sorted_d = sorted(given_to_counter.items(), key=lambda x: x[1], reverse=True)
-            if len(sorted_d)>10:
-                sorted_d=sorted_d[0:10]
-            announce=list(Announcement.objects.all().order_by('-pub_date'))
-
-            context = {
-                'user': user,
-                'logged_in': logged_in,
-                'lead_dict': sorted_d,
-                'announce_list': announce
-            }
-            return render(request, 'leaderboard.html', context)
+            if user.is_superuser:
+                given_to_list = [testi.given_to for testi in Testimonial.objects.all()]
+                given_to_counter = collections.Counter(given_to_list)
+                sorted_d = sorted(given_to_counter.items(), key=lambda x: x[1], reverse=True)
+                if len(sorted_d)>10:
+                    sorted_d=sorted_d[0:10]
+                while len(sorted_d)<10:
+                    sorted_d.append(sorted_d[len(sorted_d)-1])
+                
+                Leaderboard.objects.create(
+                    profile_0=sorted_d[0][0],
+                    profile_1=sorted_d[1][0],
+                    profile_2=sorted_d[2][0],
+                    profile_3=sorted_d[3][0],
+                    profile_4=sorted_d[4][0],
+                    profile_5=sorted_d[5][0],
+                    profile_6=sorted_d[6][0],
+                    profile_7=sorted_d[7][0],
+                    profile_8=sorted_d[8][0],
+                    profile_9=sorted_d[9][0],
+                    cnt_0=sorted_d[0][1],
+                    cnt_1=sorted_d[1][1],
+                    cnt_2=sorted_d[2][1],
+                    cnt_3=sorted_d[3][1],
+                    cnt_4=sorted_d[4][1],
+                    cnt_5=sorted_d[5][1],
+                    cnt_6=sorted_d[6][1],
+                    cnt_7=sorted_d[7][1],
+                    cnt_8=sorted_d[8][1],
+                    cnt_9=sorted_d[9][1])
+                
+            return HttpResponseRedirect(reverse('leaderboard'))
         else:
             return HttpResponseRedirect(reverse('login'))
     else:

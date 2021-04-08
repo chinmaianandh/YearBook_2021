@@ -1,5 +1,5 @@
 from django.contrib import admin
-from students.models import Profile, Testimonial, ProfileQuestion, ProfileAnswers, PollQuestion, PollAnswer, Announcement
+from students.models import Profile, Testimonial, ProfileQuestion, ProfileAnswers, PollQuestion, PollAnswer, Announcement, Leaderboard
 
 
 # Register your models here.
@@ -35,4 +35,5 @@ admin.site.register(ProfileQuestion)
 admin.site.register(ProfileAnswers, ProfileAnswersAdmin)
 admin.site.register(PollQuestion)
 admin.site.register(PollAnswer, PollAnswerAdmin),
-admin.site.register(Announcement)
+admin.site.register(Announcement),
+admin.site.register(Leaderboard)
