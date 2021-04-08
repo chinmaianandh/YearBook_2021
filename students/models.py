@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 from django.utils import timezone
 # Create your models here.
@@ -133,3 +134,17 @@ class Announcement(models.Model):
 
     def __str__(self):
         return self.content
+
+class Leaderboard(models.Model):
+    pub_date = models.DateTimeField(default=timezone.now)
+    profile_0 = models.ForeignKey(Profile,null=True,related_name='profile_0',on_delete=models.SET_NULL)
+    profile_1 = models.ForeignKey(Profile,null=True,related_name='profile_1',on_delete=models.SET_NULL)
+    profile_2 = models.ForeignKey(Profile,null=True,related_name='profile_2',on_delete=models.SET_NULL)
+    profile_3 = models.ForeignKey(Profile,null=True,related_name='profile_3',on_delete=models.SET_NULL)
+    profile_4 = models.ForeignKey(Profile,null=True,related_name='profile_4',on_delete=models.SET_NULL)
+    profile_5 = models.ForeignKey(Profile,null=True,related_name='profile_5',on_delete=models.SET_NULL)
+    profile_6 = models.ForeignKey(Profile,null=True,related_name='profile_6',on_delete=models.SET_NULL)
+    profile_7 = models.ForeignKey(Profile,null=True,related_name='profile_7',on_delete=models.SET_NULL)
+    profile_8 = models.ForeignKey(Profile,null=True,related_name='profile_8',on_delete=models.SET_NULL)
+    profile_9 = models.ForeignKey(Profile,null=True,related_name='profile_9',on_delete=models.SET_NULL)
+    cnt_list = ArrayField(models.IntegerField(default=0),size=10)
