@@ -37,7 +37,11 @@
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th class="bg-light" scope="col" colspan="2">Testimonials Leaderboard</th>
+						<th class="bg-light" scope="col" colspan="2"><h2>Testimonials Leaderboard</h2>
+						{% if admin_user %}
+						<a href="{% url 'update_leaderboard' %}">Update</a>
+						{% endif %}
+						</th>
 					</tr>
 					<tr>
 						<th scope="col" style="vertical-align:middle;">User</th>

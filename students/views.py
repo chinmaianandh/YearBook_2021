@@ -646,9 +646,55 @@ def leaderboard(request):
             if len(sorted_d)>10:
                 sorted_d=sorted_d[0:10]
             announce=list(Announcement.objects.all().order_by('-pub_date'))
+            admin_user=False
+            if user.is_superuser:
+                admin_user=True
 
             context = {
                 'user': user,
+                'admin_user': admin_user,
+                'logged_in': logged_in,
+                'lead_dict': sorted_d,
+                'announce_list': announce
+            }
+            return render(request, 'leaderboard.html', context)
+        else:
+            return HttpResponseRedirect(reverse('login'))
+    else:
+        return error404(request)
+
+
+@login_required
+def update_leaderboard(request):
+    if request.method == 'GET':
+        if request.user and not request.user.is_anonymous:
+            logged_in = True
+        else:
+            logged_in = False
+        if logged_in:
+
+            given_to_list = [testi.given_to for testi in Testimonial.objects.all()]
+            given_to_counter = collections.Counter(given_to_list)
+            sorted_d = sorted(given_to_counter.items(), key=lambda x: x[1], reverse=True)
+            if len(sorted_d)>10:
+                sorted_d=sorted_d[0:10]
+            # for i in sorted_d:
+
+
+            user = User.objects.filter(username=request.user.username).first()
+            # given_to_list = [testi.given_to for testi in Testimonial.objects.all()]
+            # given_to_counter = collections.Counter(given_to_list)
+            # sorted_d = sorted(given_to_counter.items(), key=lambda x: x[1], reverse=True)
+            # if len(sorted_d)>10:
+            #     sorted_d=sorted_d[0:10]
+            announce=list(Announcement.objects.all().order_by('-pub_date'))
+            admin_user=False
+            if user.is_superuser:
+                admin_user=True
+
+            context = {
+                'user': user,
+                'admin_user': admin_user,
                 'logged_in': logged_in,
                 'lead_dict': sorted_d,
                 'announce_list': announce
