@@ -642,7 +642,7 @@ def leaderboard(request):
             user = User.objects.filter(username=request.user.username).first()
             given_to_list = [testi.given_to for testi in Testimonial.objects.all()]
             given_to_counter = collections.Counter(given_to_list)
-            sorted_d = dict(sorted(given_to_counter.items(), key=lambda x: x[1], reverse=True))
+            sorted_d = sorted(given_to_counter.items(), key=lambda x: x[1], reverse=True)
             if len(sorted_d)>10:
                 sorted_d=sorted_d[0:10]
             announce=list(Announcement.objects.all().order_by('-pub_date'))

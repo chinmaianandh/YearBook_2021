@@ -45,17 +45,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for i,j in lead_dict.items %}
+					{% for i in lead_dict %}
 					<tr>
 						<td>
 							<span style="float: left;">
-							<a href="{{ i.profile_pic.url }}" style="margin-right: 50px;"><img src="{{ i.profile_pic.url }}" height="50px" style="border-radius: 50%;"></a>
+							<a href="{{ i.0.profile_pic.url }}" style="margin-right: 50px;"><img src="{{ i.0.profile_pic.url }}" height="50px" style="border-radius: 50%;"></a>
 								
-							<a href="{% url 'profile' i.user.username %}" >{{ i.full_name }}</a>
+							<a href="{% url 'profile' i.0.user.username %}" >{{ i.0.full_name }}</a>
 							</span>
 						</td>
 						<td style="vertical-align:middle;">
-							{{ j }}
+							{{ i.1 }}
 						</td>
 					</tr>
 					{% endfor %}
