@@ -9,9 +9,9 @@
 		<div class="col-xl-6 col-lg-12">
 			<div style="width :fit-content;min-width: 50%;height: fit-content;margin: auto;">
 				<table class="table table-bordered">
-					<thead class="thead-light">
+					<thead class="thead-light" style="text-align: center;">
 						<tr>
-							<th scope="col">Announcements</th>
+							<th scope="col"><h3>Announcements</h3></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,7 +37,11 @@
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th class="bg-light" scope="col" colspan="2">Testimonials Leaderboard</th>
+						<th class="bg-light" scope="col" colspan="2"><h3>Testimonials Leaderboard</h3><span style="float: right;">Last Updated : {{ last_updated }}</span>
+							{% if user.is_superuser %}
+							<a href="{% url 'update_leaderboard' %}">Update</a>
+							{% endif %}
+						</th>
 					</tr>
 					<tr>
 						<th scope="col" style="vertical-align:middle;">User</th>
