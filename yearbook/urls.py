@@ -24,6 +24,7 @@ from students import views as student_views
 urlpatterns = [
                   path('', student_views.leaderboard, name='leaderboard'),
                   # path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+                  path('auto_mark_favs/', student_views.auto_mark_favs, name='auto_mark_favs'),
                   path('login/', student_views.login, name='login'),
                   path('logout/', LogoutView.as_view(), name='logout'),
                   path('admin/', admin.site.urls),

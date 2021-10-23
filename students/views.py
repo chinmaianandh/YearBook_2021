@@ -716,3 +716,39 @@ def update_leaderboard(request):
             return HttpResponseRedirect(reverse('login'))
     else:
         return error404(request)
+
+
+@login_required
+def auto_mark_favs(request):
+    if request.method == 'GET':
+        if request.user and not request.user.is_anonymous:
+            logged_in = True
+        else:
+            logged_in = False
+        if logged_in:
+            user = User.objects.filter(username=request.user.username).first()
+            if user.is_superuser:
+                # main code
+                # print("Started")
+                all_profiles = Profile.objects.all()
+                for pro in all_profiles:
+                    if pro.graduating:
+                        # print(pro.full_name)
+                        testimonials = Testimonial.objects.filter(given_to=pro).order_by('-favourite',Length('content').desc(),'-id')[:3]
+                        fav_cnt=0
+                        for tes in testimonials:
+                            if tes.favourite:
+                                fav_cnt+=1
+                            # print("    "+tes.given_by.full_name+" "+str(tes.favourite))
+                        if fav_cnt==0:
+                            for tes in testimonials:
+                                tes.favourite=True
+                                tes.save()
+                        # for tes in testimonials:
+                        #     print("    "+tes.given_by.full_name+" "+str(tes.favourite))
+                        
+            return HttpResponseRedirect(reverse('leaderboard'))
+        else:
+            return HttpResponseRedirect(reverse('login'))
+    else:
+        return error404(request)

@@ -40,6 +40,7 @@
 						<th class="bg-light" scope="col" colspan="2"><h3>Testimonials Leaderboard</h3><span style="float: right;">Last Updated : {{ last_updated }}</span>
 							{% if user.is_superuser %}
 							<a href="{% url 'update_leaderboard' %}">Update</a>
+							<a href="{% url 'auto_mark_favs' %}">Mark Favs</a>
 							{% endif %}
 						</th>
 					</tr>
